@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<!DOCTYPE memspec SYSTEM "memspec.dtd">
+<memspec>
+<comment></comment>
+  <parameter id="memoryId"         value="MICRON_512MB_DDR4-2400_8bit_A"            />
+  <parameter id="memoryType"       value="DDR4"                                     />
+  <parameter id="datasheet"        value="4gb_ddr4_dram.pdf - Rev. B 10/14 EN"      />
+  <parameter id="JEDEC"            value="JESD79-4"                                 />
+  <parameter id="dieRevision"      value="A"                                        />
+  <parameter id="speedBin"         value="DDR4-2400R"                               />
+  <parameter id="vendorSpeedGrade" value="-083E"                                     />
+  <parameter id="capacity"         value="4Gb"                                      />
+  <memarchitecturespec>
+    <parameter id="burstLength"     value="8"     />
+    <parameter id="dataRate"        value="2"     />
+    <parameter id="nbrOfBanks"      value="16"    />  <!-- 4 bank groups, 4 banks / group -->
+    <parameter id="nbrOfBankGroups" value="4"     />
+    <parameter id="nbrOfColumns"    value="1024"  />
+    <parameter id="nbrOfRows"       value="32768" />
+    <parameter id="width"           value="8"     />
+  </memarchitecturespec>
+  <memtimingspec>
+    <parameter id="AL"        value="0"    exact="0"                               />
+    <parameter id="CCD_L"     value="6"    exact="max(4*cc, 5)"                               />
+    <parameter id="CCD_S"     value="4"    exact="4*cc"                               />
+    <parameter id="CKE"       value="6"    exact="max(3*cc, 5)"                               />
+    <parameter id="CKESR"     value="7"    exact="max(3*cc, 5) + 1*cc"                               />
+    <parameter id="CL"        value="16"   exact="16*cc"                          />
+    <parameter id="CWL"       value="12"   exact="12*cc"                          />
+    <parameter id="clkMhz"    value="1200" exact="0.833"                               />
+    <parameter id="clkMhzMin" value="1066" exact="0.937" comment="CWL + CL limitation" />
+    <parameter id="DQSCK"     value="1"    exact="0.175"                               />
+    <parameter id="LAW"       value="26"   exact="max(20*cc, 21)"                               />
+    <parameter id="NAW"       value="4"    exact="4*cc"                               />
+    <parameter id="PA"        value="2"    exact="2*cc"                               />
+    <parameter id="RAS"       value="39"   exact="32"                               />
+    <parameter id="RC"        value="55"   exact="32 + 13.32"                               />
+    <parameter id="RCD"       value="16"   exact="13.32"                               />
+    <parameter id="REFI"      value="9364" exact="7800"                               />
+    <parameter id="RFC"       value="313"  exact="260"                               />
+    <parameter id="RL"        value="16"   exact="16*cc"                               />
+    <parameter id="RP"        value="16"   exact="13.32"                               />
+    <parameter id="RRD_L"     value="6"    exact="max(4*cc, 4.9)"                               />
+    <parameter id="RRD_S"     value="4"    exact="max(4*cc, 3.3)"                               />
+    <parameter id="RTP"       value="9"    exact="max(4*cc, 7.5)"                               />
+    <parameter id="WL"        value="12"   exact="12*cc"                               />
+    <parameter id="WR"        value="18"   exact="15"                               />
+    <parameter id="WTR_L"     value="9"    exact="max(4*cc, 7.5)"                               />
+    <parameter id="WTR_S"     value="3"    exact="max(2*cc, 2.5)"                               />
+    <parameter id="XP"        value="8"    exact="max(4*cc, 6)"                               />
+    <parameter id="XPDLL"     value="0"    exact="0" comment="slow exit does not exist for DDR4"                               />
+    <parameter id="XS"        value="325"  exact="260 + 10"                               />
+    <parameter id="XSDLL"     value="768"  exact="768*cc"                               />
+  </memtimingspec>
+  <mempowerspec>
+    <parameter id="idd0"   value="64"  comment="IDD0" />
+    <parameter id="idd02"  value="4"   comment="IPP0"  />
+    <parameter id="idd2n"  value="50"  comment="IDD2N" />
+    <parameter id="idd2p0" value="32"  comment="IDD2P" />
+    <parameter id="idd2p1" value="32"  comment="IDD2P (copy)" />
+    <parameter id="idd3n"  value="67"  comment="IDD3N" />
+    <parameter id="idd3p0" value="44"  comment="IDD3P" />
+    <parameter id="idd3p1" value="44"  comment="IDD3P (copy)" />
+    <parameter id="idd4r"  value="160" comment="IDD4R" />
+    <parameter id="idd4w"  value="196" comment="IDD4W" />
+    <parameter id="idd5"   value="192" comment="IDD5B" />
+    <parameter id="idd6"   value="20"  comment="IDD6N" />
+    <parameter id="idd62"  value="0"   comment="Should be equal to IPP6N, but this value is not mentioned in the datasheet." />
+    <parameter id="vdd"    value="1.2" comment="VDD"  />
+    <parameter id="vdd2"   value="2.5" comment="VPP"  />
+  </mempowerspec>
+</memspec>

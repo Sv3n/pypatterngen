@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<!DOCTYPE memspec SYSTEM "memspec.dtd">
+<memspec>
+  <comment>Based on datasheet t68m_auto_lpddr.pdf - Rev. E 2/14 EN, Die Revision B.
+Corresponds to LPDDR266 speed bin JEDEC based on clock frequency.
+Using timing for Micron -75 speed grade (CL = 3 clk = 133 MHz).</comment>
+  <parameter id="memoryId"         value="MICRON_128MB_LPDDR-266_16bit_B"   />
+  <parameter id="memoryType"       value="LPDDR"                            />
+  <parameter id="datasheet"        value="t68m_auto_lpddr.pdf - Rev. E 2 14 EN.pdf" />
+  <parameter id="JEDEC"            value="JESD209B"                                 />
+  <parameter id="dieRevision"      value="B"                                        />
+  <parameter id="speedBin"         value="LPDDR266"                                 />
+  <parameter id="vendorSpeedGrade" value="-75"                                      />
+  <parameter id="capacity"         value="1Gb"                                      />
+  <memarchitecturespec>
+    <parameter id="burstLength"  value="8"     />
+    <parameter id="dataRate"     value="2"     />
+    <parameter id="nbrOfBanks"   value="4"     />
+    <parameter id="nbrOfColumns" value="1024"  />
+    <parameter id="nbrOfRows"    value="16384" />
+    <parameter id="width"        value="16"    />
+  </memarchitecturespec>
+  <memtimingspec>
+    <parameter id="CKE"     value="1"    exact="1*cc"                     />
+    <parameter id="CL"      value="3"    exact="3*cc"                     />
+    <parameter id="clkMhz"  value="133"  exact="7.5"                      />
+    <parameter id="DQSCK"   value="1"    exact="6"                        />
+    <parameter id="DQSS"    value="1"    exact="1.25"  comment="DQSS max" />
+    <parameter id="RAS"     value="6"    exact="45"                       />
+    <parameter id="RC"      value="9"    exact="67.5"                     />
+    <parameter id="RCD"     value="3"    exact="22.5"                     />
+    <parameter id="RDPDEN"  value="0"    exact="NE"                       />
+    <parameter id="REFI"    value="1040" exact="7800"                     />
+    <parameter id="REFPDEN" value="0"    exact="NE"                       />
+    <parameter id="RFC"     value="10"   exact="72"                       />
+    <parameter id="RP"      value="3"    exact="22.5"                     />
+    <parameter id="RRD"     value="2"    exact="15"                       />
+    <parameter id="WR"      value="2"    exact="15"                       />
+    <parameter id="WRAPDEN" value="0"    exact="NE"                       />
+    <parameter id="WRPDEN"  value="0"    exact="NE"                       />
+    <parameter id="WTR"     value="1"    exact="1*cc"                     />
+    <parameter id="XP"      value="1"    exact="1*cc"                     />
+    <parameter id="XPDLL"   value="1"    exact="1*cc"                     />
+    <parameter id="XS"      value="15"   exact="112.5" comment="= XSR"    />
+    <parameter id="XSDLL"   value="15"   exact="112.5" comment="= XS"     />
+  </memtimingspec>
+  <mempowerspec>
+    <parameter id="idd0"   value="70"                                               />
+    <parameter id="idd2n"  value="12"                                               />
+    <parameter id="idd2p0" value="0.6"                                              />
+    <parameter id="idd2p1" value="0.6"                                              />
+    <parameter id="idd3n"  value="16"                                               />
+    <parameter id="idd3p0" value="3.6"                                              />
+    <parameter id="idd3p1" value="3.6"                                              />
+    <parameter id="idd4r"  value="110"                                              />
+    <parameter id="idd4w"  value="110"                                              />
+    <parameter id="idd5"   value="100"                                              />
+    <parameter id="idd6"   value="0.45" comment="full array refresh at 45 degrees"  />
+    <parameter id="vdd"    value="1.8"                                              />
+  </mempowerspec>
+</memspec>

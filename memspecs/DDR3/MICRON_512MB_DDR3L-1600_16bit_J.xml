@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<!DOCTYPE memspec SYSTEM "memspec.dtd">
+<memspec>
+  <comment>Based on datasheet 4Gb_DDR3L.pdf - Rev. I 9/13 EN, Die Revision E (x16 device, hence 96-ball, using latest currents).
+Corresponds to DDR3-1600K JEDEC speed bin based on CL value.
+Using timing for Micron 125 speed grade (CL = 11, clk = 800 MHz).</comment>
+  <parameter id="memoryId"         value="MICRON_512MB_DDR3L-1600_16bit_E"    />
+  <parameter id="memoryType"       value="DDR3"                               />
+  <parameter id="datasheet"        value="4Gb_DDR3L.pdf - Rev. I 9 13 EN.pdf" />
+  <parameter id="JEDEC"            value="JESD79-3-1A-01"                     />
+  <parameter id="dieRevision"      value="E"                                  />
+  <parameter id="speedBin"         value="DDR3L-1600"                         />
+  <parameter id="vendorSpeedGrade" value="-125"                               />
+  <parameter id="capacity"         value="4Gb"                                />
+  <memarchitecturespec>
+    <parameter id="burstLength"  value="8"     />
+    <parameter id="dataRate"     value="2"     />
+    <parameter id="nbrOfBanks"   value="8"     />
+    <parameter id="nbrOfColumns" value="1024"  />
+    <parameter id="nbrOfRows"    value="32768" />
+    <parameter id="width"        value="16"    />
+  </memarchitecturespec>
+  <memtimingspec>
+    <parameter id="CCD"     value="4"    exact="4*cc"                                              />
+    <parameter id="CKE"     value="4"    exact="max(3*cc, 5)"                                      />
+    <parameter id="CKESR"   value="5"    exact="max(3*cc, 5) + 1*cc"                               />
+    <parameter id="CL"      value="11"   exact="11*cc"                                             />
+    <parameter id="clkMhz"  value="800"  exact="1.25"                                              />
+    <parameter id="CWL"     value="8"    exact="8*cc"                                              />
+    <parameter id="DQSCK"   value="1"    exact="0.225"                                             />
+    <parameter id="FAW"     value="40"   exact="50"                                                />
+    <parameter id="RAS"     value="28"   exact="35"                                                />
+    <parameter id="RC"      value="39"   exact="48.75"                                             />
+    <parameter id="RCD"     value="11"   exact="13.75"                                             />
+    <parameter id="RDPDEN"  value="16"   exact="(11 + 4 + 1) * cc"       comment="RL + 4 + 1"      />
+    <parameter id="REFI"    value="6240" exact="7800"                                              />
+    <parameter id="REFPDEN" value="1"    exact="1*cc"                                              />
+    <parameter id="RFC"     value="208"  exact="260"                                               />
+    <parameter id="RL"      value="11"   exact="11*cc"                   comment="= CL + AL"       />
+    <parameter id="RP"      value="11"   exact="13.75"                                             />
+    <parameter id="RRD"     value="6"    exact="max(4*cc, 7.5)"                                    />
+    <parameter id="RTP"     value="6"    exact="max(4*cc, 7.5)"                                    />
+    <parameter id="WL"      value="8"    exact="8*cc"                    comment="= CWL + AL"      />
+    <parameter id="WR"      value="12"   exact="15"                                                />
+    <parameter id="WRAPDEN" value="25"   exact="8*cc + 4*cc + 15 + 1*cc" comment="WL + 4 + WR + 1" />
+    <parameter id="WRPDEN"  value="24"   exact="8*cc + 4*cc + 15"        comment="WL + 4 + WR"     />
+    <parameter id="WTR"     value="6"    exact="max(4*cc, 7.5)"                                    />
+    <parameter id="XP"      value="5"    exact="max(3*cc, 6)"                                      />
+    <parameter id="XPDLL"   value="20"   exact="max(10*cc, 24)"                                    />
+    <parameter id="XS"      value="216"  exact="max(5*cc, 260 + 10)"                               />
+    <parameter id="XSDLL"   value="512"  exact="512*cc"                                            />
+  </memtimingspec>
+  <mempowerspec>
+    <parameter id="idd0"   value="66"   />
+    <parameter id="idd2n"  value="32"   />
+    <parameter id="idd2p0" value="18"   />
+    <parameter id="idd2p1" value="32"   />
+    <parameter id="idd3n"  value="47"   />
+    <parameter id="idd3p0" value="38"   />
+    <parameter id="idd3p1" value="38"   />
+    <parameter id="idd4r"  value="235"  />
+    <parameter id="idd4w"  value="171"  />
+    <parameter id="idd5"   value="235"  />
+    <parameter id="idd6"   value="20"   />
+    <parameter id="vdd"    value="1.35" />
+  </mempowerspec>
+</memspec>

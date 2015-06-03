@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<!DOCTYPE memspec SYSTEM "memspec.dtd">
+<memspec>
+  <comment>Based on datasheet 1GbDDR2.pdf – Rev. Z 03/14 EN, Die Revision H.
+Corresponds to DDR2-1066F JEDEC speed bin based on CL value (1066 is defined in JEDEC JESD208).
+Using timing for Micron -178E speed grade (CL = 7, clk = 533 MHz).</comment>
+  <parameter id="memoryId"         value="MICRON_128MB_DDR2-1066_16bit_H"    />
+  <parameter id="memoryType"       value="DDR2"                              />
+  <parameter id="datasheet"        value="1GbDDR2.pdf – Rev. Z 03 14 EN.pdf" />
+  <parameter id="JEDEC"            value="JESD208"                           />
+  <parameter id="dieRevision"      value="H"                                 />
+  <parameter id="speedBin"         value="DDR2-1066F"                        />
+  <parameter id="vendorSpeedGrade" value="-178E"                             />
+  <parameter id="capacity"         value="1Gb"                               />
+  <memarchitecturespec>
+    <parameter id="burstLength"      value="8"    />
+    <parameter id="dataRate"         value="2"    />
+    <parameter id="nbrOfBanks"       value="8"    />
+    <parameter id="nbrOfColumns"     value="1024" />
+    <parameter id="nbrOfRanks"       value="1"    />
+    <parameter id="nbrOfRows"        value="8192" />
+    <parameter id="width"            value="16"   />
+  </memarchitecturespec>
+  <memtimingspec>
+    <parameter id="CCD"    type="uint"   value="2"    exact="2*cc"                                                              />
+    <parameter id="CKE"    type="uint"   value="3"    exact="3*cc"                                                              />
+    <parameter id="CKESR"  type="uint"   value="4"    exact="0.325 + 3*cc" comment="Using ISXR + CKE"                           />
+    <parameter id="CL"     type="uint"   value="7"    exact="7*cc"                                                              />
+    <parameter id="clkMhz" type="double" value="533"  exact="1.875"                                                             />
+    <parameter id="DQSCK"  type="uint"   value="1"    exact="0.3"                                                               />
+    <parameter id="FAW"    type="uint"   value="24"   exact="45"                                                                />
+    <parameter id="RAS"    type="uint"   value="22"   exact="40"                                                                />
+    <parameter id="RC"     type="uint"   value="29"   exact="54"                                                                />
+    <parameter id="RCD"    type="uint"   value="7"    exact="13.125"                                                            />
+    <parameter id="REFI"   type="uint"   value="4160" exact="7800"                                                              />
+    <parameter id="RFC"    type="uint"   value="68"   exact="127.5"                                                             />
+    <parameter id="RP"     type="uint"   value="7"    exact="13.125"                                                            />
+    <parameter id="RRD"    type="uint"   value="6"    exact="10"                                                                />
+    <parameter id="RTP"    type="uint"   value="4"    exact="7.5"                                                               />
+    <parameter id="WR"     type="uint"   value="8"    exact="15"                                                                />
+    <parameter id="WTR"    type="uint"   value="4"    exact="7.5"                                                               />
+    <parameter id="XP"     type="uint"   value="3"    exact="3*cc"                                                              />
+    <parameter id="XPDLL"  type="uint"   value="3"    exact="3*cc"         comment="Using XARD (slow active power-down exit)"   />
+    <parameter id="XS"     type="uint"   value="74"   exact="127.5 + 10"   comment="Using XSNR (self refresh exit to non read)" />
+    <parameter id="XSDLL"  type="uint"   value="200"  exact="200*cc"       comment="Using XSRD"                                 />
+  </memtimingspec>
+  <mempowerspec>
+    <parameter id="idd0"   value="90"    />
+    <parameter id="idd2n"  value="36"    />
+    <parameter id="idd2p0" value="7"     />
+    <parameter id="idd2p1" value="7"     />
+    <parameter id="idd3n"  value="42"    />
+    <parameter id="idd3p0" value="10"    comment="Set to IDD3Ps"  />
+    <parameter id="idd3p1" value="23"    comment="Set to IDD3Psf" />
+    <parameter id="idd4r"  value="180.0" />
+    <parameter id="idd4w"  value="185.0" />
+    <parameter id="idd5"   value="160.0" />
+    <parameter id="idd6"   value="7.0"   />
+    <parameter id="vdd"    value="1.8"   />
+  </mempowerspec>
+</memspec>

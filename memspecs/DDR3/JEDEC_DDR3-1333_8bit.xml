@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE memspec SYSTEM "memspec.dtd">
+<memspec>
+  <comment>I picked the 1Gb device, which has a page size of 1 KB</comment>
+  <parameter id="memoryId"         value="JEDEC_DDR3-1333_8bit"           />
+  <parameter id="memoryType"       value="DDR3"                           />
+  <parameter id="datasheet"        value="" />
+  <parameter id="JEDEC"            value="JESD79-3D"                      />
+  <parameter id="dieRevision"      value=""                               />
+  <parameter id="speedBin"         value="DDR3-1333G"                     />
+  <parameter id="vendorSpeedGrade" value=""                               />
+  <parameter id="capacity"         value=""                               />
+  <memarchitecturespec>
+    <parameter id="burstLength"  value="8"     />
+    <parameter id="dataRate"     value="2"     />
+    <parameter id="nbrOfBanks"   value="8"     />
+    <parameter id="nbrOfColumns" value="1024"  />
+    <parameter id="nbrOfRanks"   value="1"     />
+    <parameter id="nbrOfRows"    value="16384" />
+    <parameter id="width"        value="8"     />
+  </memarchitecturespec>
+  <memtimingspec>
+    <parameter id="AL"     value="0"    exact="0" />
+    <parameter id="CCD"    value="4"    exact="4*cc" />
+    <parameter id="CL"     value="8"    exact="8*cc" />
+    <parameter id="CWL"    value="7"    exact="7*cc" />
+    <parameter id="clkMhz" value="666"  exact="1.5" />
+    <parameter id="FAW"    value="20"   exact="30" />
+    <parameter id="RAS"    value="24"   exact="36" />
+    <parameter id="RC"     value="32"   exact="48" />
+    <parameter id="RCD"    value="8"    exact="12" />
+    <parameter id="REFI"   value="5200" exact="7800" />
+    <parameter id="RFC"    value="74"   exact="110" />
+    <parameter id="RP"     value="8"    exact="12" />
+    <parameter id="RRD"    value="4"    exact="max(4*cc, 6)" />
+    <parameter id="RTP"    value="5"    exact="max(4*cc, 7.5)" />
+    <parameter id="WR"     value="10"   exact="15" />
+    <parameter id="WTR"    value="5"    exact="max(4*cc, 7.5)" />
+  </memtimingspec>
+  <mempowerspec>
+  </mempowerspec>
+</memspec>

@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<!DOCTYPE memspec SYSTEM "memspec.dtd">
+<memspec>
+  <comment>Based on datasheet 1Gb_DDR3_SDRAM.pdf - Rev. L 03/13 EN, Die Revision G.
+Corresponds to DDR3-1066F JEDEC based on CL value.
+Using timing for Micron 178E speed grade (CL = 7, clk = 533 MHz).</comment>
+  <parameter id="memoryId"         value="MICRON_128MB_DDR3-1066_16bit_G"           />
+  <parameter id="memoryType"       value="DDR3"                                     />
+  <parameter id="datasheet"        value="1Gb_DDR3_SDRAM.pdf - Rev. L 03 13 EN.pdf" />
+  <parameter id="JEDEC"            value="JESD79-3E"                                />
+  <parameter id="dieRevision"      value="G"                                        />
+  <parameter id="speedBin"         value="DDR3-1066F"                               />
+  <parameter id="vendorSpeedGrade" value="-178E"                                    />
+  <parameter id="capacity"         value="1Gb"                                      />
+  <memarchitecturespec>
+    <parameter id="burstLength"  value="8"    />
+    <parameter id="dataRate"     value="2"    />
+    <parameter id="nbrOfBanks"   value="8"    />
+    <parameter id="nbrOfColumns" value="1024" />
+    <parameter id="nbrOfRanks"   value="1"    />
+    <parameter id="nbrOfRows"    value="8192" />
+    <parameter id="width"        value="16"   />
+  </memarchitecturespec>
+  <memtimingspec>
+    <parameter id="AL"     value="0"    />
+    <parameter id="CCD"    value="4"    />
+    <parameter id="CKE"    value="3"    />
+    <parameter id="CKESR"  value="4"    />
+    <parameter id="CL"     value="7"    />
+    <parameter id="clkMhz" value="533"  />
+    <parameter id="DQSCK"  value="0"    />
+    <parameter id="FAW"    value="27"   />
+    <parameter id="RAS"    value="20"   />
+    <parameter id="RC"     value="27"   />
+    <parameter id="RCD"    value="7"    />
+    <parameter id="REFI"   value="4160" />
+    <parameter id="RFC"    value="59"   />
+    <parameter id="RL"     value="7"    />
+    <parameter id="RP"     value="7"    />
+    <parameter id="RRD"    value="6"    />
+    <parameter id="RTP"    value="4"    />
+    <parameter id="WL"     value="6"    />
+    <parameter id="WR"     value="8"    />
+    <parameter id="WTR"    value="4"    />
+    <parameter id="XP"     value="4"    />
+    <parameter id="XPDLL"  value="13"   />
+    <parameter id="XS"     value="64"   />
+    <parameter id="XSDLL"  value="512"  />
+  </memtimingspec>
+  <mempowerspec>
+    <parameter id="idd0"   value="75.0"  />
+    <parameter id="idd2n"  value="35.0"  />
+    <parameter id="idd2p0" value="12.0"  />
+    <parameter id="idd2p1" value="25.0"  />
+    <parameter id="idd3n"  value="45.0"  />
+    <parameter id="idd3p0" value="30.0"  />
+    <parameter id="idd3p1" value="30.0"  />
+    <parameter id="idd4r"  value="140.0" />
+    <parameter id="idd4w"  value="155.0" />
+    <parameter id="idd5"   value="160.0" />
+    <parameter id="idd6"   value="8.0"   />
+    <parameter id="vdd"    value="1.5"   />
+  </mempowerspec>
+</memspec>
