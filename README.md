@@ -7,7 +7,7 @@ If you use or wish to cite these scripts for a publication, then please use use 
 ## Usage
 
 ```
-usage: make_patterns.py [-h] --BI BI --BC BC [--BGI BGI] --memspec MEMSPEC
+usage: make_patterns.py [-h] --BI BI --BC BC [--BGI {0,1}] --memspec MEMSPEC
 
 Create a memory pattern
 
@@ -15,15 +15,15 @@ optional arguments:
   -h, --help         show this help message and exit
   --BI BI            Number of banks interleaved
   --BC BC            Number of bursts per bank
-  --BGI BGI          Use bank-group interleaving (DDR4 only)
+  --BGI {0,1}        Use bank-group interleaving (DDR4 only)
   --memspec MEMSPEC  Memory specification xml file to use.
 ```
 
 The script generates memory patterns for DDR2/3/4 and LPDDR1/2/3 memories, and is written in python. It requires at least python 3.4 (since it uses Enum datatypes). We have only tested it on an Ubuntu 14.04 machine. After cloning the repo, the `make_patterns.py` script can be used to quickly generate patterns (without having to figure out the entire API). Its 3 required arguments are:
 
- * --BI: The number of banks to interleave over
- * --BC: The number of bursts per bank
- * --memspec: An xml file that contains a specification of the memory timings. We have provided 12 samples we often use. Running:
+ * `--BI`: The number of banks to interleave over
+ * `--BC`: The number of bursts per bank
+ * `--memspec`: An xml file that contains a specification of the memory timings. We have provided 12 samples we often use. Running:
 
 ```bash
 ./make_patterns.py --BI 2 --BC 4 --memspec memspecs/DDR4/MICRON_512MB_DDR4-1866_8bit_A.xml 
@@ -53,6 +53,10 @@ Commands: W0-N0-N0-N0-N0-W0-N0-N0-N0-N0-W0-N0-N0-N0-N0-W0-N0-N0-N0-W1-N0-N0-N0-N
 ```
 
 The *AP* patterns contain activate and precharge commands, and are implement a close-page policy. The remaining patterns are related to the conservative open-page policy.
+
+The optional argument:
+ * `--BGI`: Use bank-group interleaving (DDR4 only)
+may be set to 1 to enable pairwise bank-group interleaving (PBGI), which may generate shorter schedules for DDR4 memories, since it avoids the long CCD_L constraint by interleaving bursts across bank groups.
 
 ## Development
 The purpose of these scripts is to be more user-friendly, and easier to maintain than the originals that were published with this article. The main differences with respect to that version are:
