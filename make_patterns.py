@@ -44,7 +44,7 @@ def parseArguments():
     parser = argparse.ArgumentParser(description='Create a memory pattern')
     parser.add_argument('--BI', dest='BI', type=int, required=True, help='Number of banks interleaved')
     parser.add_argument('--BC', dest='BC', type=int, required=True, help='Number of bursts per bank')
-    parser.add_argument('--BGI', dest='BGI', type=bool, required=False, default=False, help='Use bank-group interleaving (DDR4 only)')
+    parser.add_argument('--BGI', dest='BGI', type=int, required=False, default=0, choices=[0, 1], help='Use bank-group interleaving (DDR4 only)')
     parser.add_argument('--memspec', dest='memspec', type=str, required=True, help='Memory specification xml file to use.')
     return parser.parse_args()
 
