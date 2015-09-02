@@ -19,11 +19,11 @@ optional arguments:
   --memspec MEMSPEC  Memory specification xml file to use.
 ```
 
-The script generates memory patterns for DDR2/3/4 and LPDDR1/2/3 memories, and is written in python. It requires at least python 3.4 (since it uses Enum datatypes). We have only tested it on an Ubuntu 14.04 machine. After cloning the repo, the make_patterns.py script can be used to quickly generate patterns (without having to figure out the entire API). Its 3 required arguments are:
+The script generates memory patterns for DDR2/3/4 and LPDDR1/2/3 memories, and is written in python. It requires at least python 3.4 (since it uses Enum datatypes). We have only tested it on an Ubuntu 14.04 machine. After cloning the repo, the `make_patterns.py` script can be used to quickly generate patterns (without having to figure out the entire API). Its 3 required arguments are:
 
---BI: The number of banks to interleave over
---BC: The number of bursts per bank
---memspec: An xml file that contains a specification of the memory timings. We have provided 12 samples we often use. Running:
+ * --BI: The number of banks to interleave over
+ * --BC: The number of bursts per bank
+ * --memspec: An xml file that contains a specification of the memory timings. We have provided 12 samples we often use. Running:
 
 ```bash
 ./make_patterns.py --BI 2 --BC 4 --memspec memspecs/DDR4/MICRON_512MB_DDR4-1866_8bit_A.xml 
@@ -59,7 +59,7 @@ The purpose of these scripts is to be more user-friendly, and easier to maintain
 
  * The implementation is cleaner and more pythonic. One single representation of a pattern is shared by all functions.
  * Integration with the wrapper around [DRAMPower 3.1](https://github.com/ravenrd/DRAMPower) is currently not available. In the future, these scripts should hook into the latest version of DRAMPower.
- * ILP generating functionality is removed. The GLPK wrapper was quite old and only worked on older machines. A more direct mapper to the CPLEX input files is preferable if we decide to re-implement it.
+ * ILP generating functionality is removed. The GLPK wrapper we originally used was quite old and only worked on older machines. A more direct mapper to the CPLEX input files is preferable if we decide to re-implement it.
  * Conservative open-page patterns can be generated, related to the paper Goossens, Sven; Akesson, Benny; Goossens, Kees, "Conservative open-page policy for mixed time-criticality memory controllers," in Design, Automation & Test in Europe Conference & Exhibition (DATE), 2013 , vol., no., pp.525-530, 18-22 March 2013
 doi: 10.7873/DATE.2013.118 ([pdf](http://www.es.ele.tue.nl/~sgoossens/pub/goossens13-date.pdf), [ppt](http://www.es.ele.tue.nl/~sgoossens/pub/goossens13-date_presentation.pdf), [ieeexplore](http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6513564))
 
@@ -87,7 +87,7 @@ month={},}
 doi: 10.1109/CODES-ISSS.2013.6658989* ([ieeexplore](http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6658989))
  * **On the real-time analysis of memory patterns**: *Akesson, B.; Hayes, W.; Goossens, K., "Classification and Analysis of Predictable Memory Patterns," in Embedded and Real-Time Computing Systems and Applications (RTCSA), 2010 IEEE 16th International Conference on , pp.367-376 doi: 10.1109/RTCSA.2010.35* ([ieeexplore](http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=5591843))
  * **A high-level overview of the memory controller including front-end**: *Akesson, B.; Goossens, K., "Architectures and modeling of predictable memory controllers for improved system integration," in Design, Automation & Test in Europe Conference & Exhibition (DATE), 2011 , pp.1-6, doi: 10.1109/DATE.2011.5763145* ([ieeexplore](http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=5763145))
-* **CompSOC platform overview**: *Kees Goossens, Arnaldo Azevedo, Karthik Chandrasekar, Manil Dev Gomony, Sven Goossens, Martijn Koedam, Yonghui Li, Davit Mirzoyan, Anca Molnos, Ashkan Beyranvand Nejad, Andrew Nelson, and Shubhendu Sinha, "Virtual Execution Platforms for Mixed-Time-Criticality Systems: The CompSOC Architecture and Design Flow", ACM SIGBED Volume 10(3), Oct 2013.* ([pdf](http://www.es.ele.tue.nl/~kgoossens/2013-sigbed.pdf), [mirror](http://sigbed.seas.upenn.edu/archives/2013-10/crts2012_submission_5.pdf))
+ * **CompSOC platform overview**: *Kees Goossens, Arnaldo Azevedo, Karthik Chandrasekar, Manil Dev Gomony, Sven Goossens, Martijn Koedam, Yonghui Li, Davit Mirzoyan, Anca Molnos, Ashkan Beyranvand Nejad, Andrew Nelson, and Shubhendu Sinha, "Virtual Execution Platforms for Mixed-Time-Criticality Systems: The CompSOC Architecture and Design Flow", ACM SIGBED Volume 10(3), Oct 2013.* ([pdf](http://www.es.ele.tue.nl/~kgoossens/2013-sigbed.pdf), [mirror](http://sigbed.seas.upenn.edu/archives/2013-10/crts2012_submission_5.pdf))
 
  
 
