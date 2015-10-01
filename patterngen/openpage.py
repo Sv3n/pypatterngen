@@ -35,6 +35,59 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 import copy
 from .cmd import CmdTp, Cmd
 from .patterngen import earliest, addActAndRw, annotateAutoPre, minPatternDistance, RawPattern, maxCmdCycle
+from .patterngen import _rtwPattern, _wtrPattern, refPattern
+from .pattern import PatternTp, Pattern
+from .patternset import PatternSet
+
+
+def makeOpenPage(ps, bi, bc, useBsPbgi):
+    # """Transform to conservative open-page"""
+    nap, anp, ps_nanp = openPage(ps, bi, bc, useBsPbgi)
+
+    print("AP mode:   {pattern_set}".format(pattern_set=ps))
+    print("NAP mode:  {pattern_set}".format(pattern_set=nap))
+    print("ANP mode:  {pattern_set}".format(pattern_set=anp))
+    print("NANP mode: {pattern_set}".format(pattern_set=ps_nanp))
+
+
+def addAuxPatternsCop(from_ps, to_ps0, to_ps1, hasRefresh=False):
+    """
+    Add the read-to-write, write-to-read and refresh patterns to pattern set from_ps.
+    """
+    tp = PatternTp.RTW
+    from_ps[tp] = Pattern(tp, rtwPatternCop(from_ps, to_ps0, to_ps1))
+
+    tp = PatternTp.WTR
+    from_ps[tp] = Pattern(tp, wtrPatternCop(from_ps, to_ps0, to_ps1))
+
+    if hasRefresh:
+        tp = PatternTp.REF
+        from_ps[tp] = Pattern(tp, refPattern(from_ps))  # BUG: need refPatternCop equivalent
+
+
+def openPage(ps_ap, bi, bc, useBsPbgi):
+    """
+    Take the pattern set ps, and generate conservative open-page patterns based on it.
+    """
+    ps_nap = PatternSet(bi, bc, useBsPbgi)
+    ps_anp = PatternSet(bi, bc, useBsPbgi)
+    ps_nanp = PatternSet(bi, bc, useBsPbgi)
+    for rw in [CmdTp.RD, CmdTp.WR]:
+        tp = PatternTp.fromCmdTp(rw)
+        p = ps_ap[tp]
+        anp = Pattern(tp, toAnp(p.commands))
+        # useBsPbgi is set to false for this example.
+        nap = Pattern(tp, patternGenNap(BI=bi, BC=bc, rdOrWr=rw, useBsPbgi=useBsPbgi, ANP=anp.commands, ANPLength=len(anp)))
+        nanp = Pattern(tp, patternGenNanp(BI=bi, BC=bc, rdOrWr=rw, useBsPbgi=useBsPbgi, NAP=nap.commands))
+        ps_anp[tp] = anp
+        ps_nap[tp] = nap
+        ps_nanp[tp] = nanp
+
+    """Add auxiliary patterns"""
+    addAuxPatternsCop(ps_anp, ps_nap, ps_nanp)
+    addAuxPatternsCop(ps_nap, ps_ap, ps_anp, hasRefresh=True)
+    addAuxPatternsCop(ps_nanp, ps_nap, ps_nanp)
+    return ps_nap, ps_anp, ps_nanp
 
 
 def firstFreeCycle(cycle, P):
@@ -69,6 +122,8 @@ def findFirstRdWr(P):
         if cmd.cycle == smallestCc:
             smallestRdWrCmd = cmd
     return smallestRdWrCmd
+
+
 def toAnp(P):
     """
     Convert an AP pattern to an ANP pattern
@@ -179,3 +234,29 @@ def stretchPrecharge(pattLen, P, nextPattern):
 
         # print('\nMoved precharge %s forward to %d.' % (firstPre, preCC))
         P = sorted(P, key=lambda c: c.cycle)
+
+
+def rtwPatternCop(from_ps, to_ps0, to_ps1):
+    """
+    Conservative open-page rtw pattern
+    """
+    length0 = _rtwPattern(from_ps[PatternTp.RD].commandsPre,
+                          to_ps0[PatternTp.WR].commandsPre,
+                          len(from_ps[PatternTp.RD]))
+    length1 = _rtwPattern(from_ps[PatternTp.RD].commandsPre,
+                          to_ps1[PatternTp.WR].commandsPre,
+                          len(from_ps[PatternTp.RD]))
+    return RawPattern(max(length0, length1), [], [])
+
+
+def wtrPatternCop(from_ps, to_ps0, to_ps1):
+    """
+    Conservative open-page wtr pattern
+    """
+    length0 = _wtrPattern(to_ps0[PatternTp.RD].commandsPre,
+                          from_ps[PatternTp.WR].commandsPre,
+                          len(from_ps[PatternTp.WR]))
+    length1 = _wtrPattern(to_ps1[PatternTp.RD].commandsPre,
+                          from_ps[PatternTp.WR].commandsPre,
+                          len(from_ps[PatternTp.WR]))
+    return RawPattern(max(length0, length1), [], [])

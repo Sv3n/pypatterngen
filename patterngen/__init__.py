@@ -33,7 +33,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  Description: This module contains classes and functions that generate SDRAM patterns.
 """
 
-__all__ = ['setMemSpec', 'PatternSet', 'Pattern', 'Spec', 'PatternTp', 'CmdTp', 'patternGenBGI', 'rtwPattern', 'wtrPattern', 'refPattern', 'toAnp', 'patternGenNap', 'memconstraintsLut']
+__all__ = ['setMemSpec', 'PatternSet', 'Pattern', 'Spec', 'PatternTp', 'CmdTp',
+           'patternGenBGI', 'rtwPattern', 'wtrPattern', 'refPattern', 'toAnp',
+           'patternGenNap', 'memconstraintsLut', 'rtwPatternCop', 'wtrPatternCop', 'patternGenNanp']
 
 from .cmd import CmdTp
 from .pattern import Pattern, PatternTp
@@ -41,4 +43,4 @@ from .patternset import PatternSet
 from .memspec import *
 from .memconstraints import memconstraintsLut
 from .patterngen import *
-from .openpage import *
+from .openpage import rtwPatternCop, wtrPatternCop, toAnp, patternGenNap, patternGenNanp, makeOpenPage
