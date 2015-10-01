@@ -36,7 +36,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  Authors: Sven Goossens
 """
 
-from patterngen import setMemSpec, PatternSet, Pattern, Spec, PatternTp, CmdTp, patternGenBGI, rtwPattern, wtrPattern, refPattern, toAnp, patternGenNap
+from patterngen import setMemSpec, PatternSet, Pattern, Spec, PatternTp, CmdTp, patternGenBGI, rtwPattern, wtrPattern, refPattern, rtwPatternCop, wtrPatternCop, toAnp, patternGenNap, patternGenNanp
 import argparse
 
 
@@ -49,6 +49,40 @@ def parseArguments():
     return parser.parse_args()
 
 
+def canUseBsPbgi(bi, bc, bgi):
+    """
+    Return true when bgi is true, and when it makes sense to use it.
+    """
+    if Spec.spec.memory_type == 'DDR4' and bi > 1 and bc > 1:
+        return bgi
+    return False
+
+
+def addAuxPatterns(ps):
+    """
+    Add the read-to-write, write-to-read and refresh patterns to pattern set ps.
+    """
+    tp = PatternTp.RTW
+    ps[tp] = Pattern(tp, rtwPattern(ps))
+    tp = PatternTp.WTR
+    ps[tp] = Pattern(tp, wtrPattern(ps))
+    tp = PatternTp.REF
+    ps[tp] = Pattern(tp, refPattern(ps))
+
+
+def addAuxPatternsCop(from_ps, to_ps0, to_ps1, hasRefresh=False):
+    """
+    Add the read-to-write, write-to-read and refresh patterns to pattern set from_ps.
+    """
+    tp = PatternTp.RTW
+    from_ps[tp] = Pattern(tp, rtwPatternCop(from_ps, to_ps0, to_ps1))
+
+    tp = PatternTp.WTR
+    from_ps[tp] = Pattern(tp, wtrPatternCop(from_ps, to_ps0, to_ps1))
+
+    if hasRefresh:
+        tp = PatternTp.REF
+        from_ps[tp] = Pattern(tp, refPattern(from_ps))  # BUG: need refPatternCop equivalent
 def patternSet(memspec, bi, bc, bgi):
     """Create a pattern set based on the given BI/BC/BGI parameters"""
 
@@ -56,9 +90,7 @@ def patternSet(memspec, bi, bc, bgi):
     setMemSpec(memspec)
 
     """Only use bank-group interleaving when there is something to interleave"""
-    useBsPbgi = False
-    if Spec.spec.memory_type == 'DDR4' and bi > 1 and bc > 1:
-        useBsPbgi = bgi
+    useBsPbgi = canUseBsPbgi(bi, bc, bgi)
 
     """Create a new PatternSet object"""
     ps = PatternSet(bi, bc, useBsPbgi)
@@ -71,40 +103,53 @@ def patternSet(memspec, bi, bc, bgi):
         ps[PatternTp.fromCmdTp(rw)] = p
 
     """Add auxiliary patterns"""
-    tp = PatternTp.RTW
-    ps[tp] = Pattern(tp, rtwPattern(ps))
-    tp = PatternTp.WTR
-    ps[tp] = Pattern(tp, wtrPattern(ps))
-    tp = PatternTp.REF
-    ps[tp] = Pattern(tp, refPattern(ps))
+    addAuxPatterns(ps)
 
     return ps
 
 
-def openPage(ps, bi, bc):
+def openPage(ps_ap, bi, bc, bgi):
     """
     Take the pattern set ps, and generate conservative open-page patterns based on it.
     """
+    useBsPbgi = canUseBsPbgi(bi, bc, bgi)
+    ps_nap = PatternSet(bi, bc, useBsPbgi)
+    ps_anp = PatternSet(bi, bc, useBsPbgi)
+    ps_nanp = PatternSet(bi, bc, useBsPbgi)
     for rw in [CmdTp.RD, CmdTp.WR]:
         tp = PatternTp.fromCmdTp(rw)
-        p = ps[tp]
+        p = ps_ap[tp]
         anp = Pattern(tp, toAnp(p.commands))
         # useBsPbgi is set to false for this example.
-        nap = Pattern(tp, patternGenNap(BI=bi, BC=bc, rdOrWr=rw, useBsPbgi=False, ANP=anp.commands, ANPLength=len(anp)))
+        nap = Pattern(tp, patternGenNap(BI=bi, BC=bc, rdOrWr=rw, useBsPbgi=useBsPbgi, ANP=anp.commands, ANPLength=len(anp)))
+        nanp = Pattern(tp, patternGenNanp(BI=bi, BC=bc, rdOrWr=rw, useBsPbgi=useBsPbgi, NAP=nap.commands))
+        ps_anp[tp] = anp
+        ps_nap[tp] = nap
+        ps_nanp[tp] = nanp
 
-        print("{tp} (ANP)".format(tp=str(tp)), anp)
-        print("{tp} (NAP)".format(tp=str(tp)), nap)
+    """Add auxiliary patterns"""
+    addAuxPatternsCop(ps_anp, ps_nap, ps_nanp)
+    addAuxPatternsCop(ps_nap, ps_ap, ps_anp, hasRefresh=True)
+    addAuxPatternsCop(ps_nanp, ps_nap, ps_nanp)
+    return ps_nap, ps_anp, ps_nanp
 
 
 def main():
     args = parseArguments()
     """Create a (close-page) pattern set and print it"""
     ps = patternSet(args.memspec, args.BI, args.BC, args.BGI)
-    for tp in [PatternTp.WR, PatternTp.RD]:
-        print("{tp} (AP)".format(tp=str(tp)), ps[tp])
+    print('Worst-case bandwidth: {worst_case_bandwidth:.3f} MB/s'.format(worst_case_bandwidth=ps.worstCaseBandwidth()))
+    for tp in [PatternTp.WR, PatternTp.RD, PatternTp.RTW, PatternTp.WTR]:
+        print("{tp} (AP): {pattern_set}".format(tp=str(tp), pattern_set=ps[tp]))
 
-    """Transform to conservative open-page"""
-    openPage(ps, args.BI, args.BC)
+
+    # """Transform to conservative open-page"""
+    # nap, anp, ps_nanp = openPage(ps, args.BI, args.BC, args.BGI)
+
+    # print("AP mode:   {pattern_set}".format(pattern_set=ps))
+    # print("NAP mode:  {pattern_set}".format(pattern_set=nap))
+    # print("ANP mode:  {pattern_set}".format(pattern_set=anp))
+    # print("NANP mode: {pattern_set}".format(pattern_set=ps_nanp))
 
 
 if __name__ == '__main__':

@@ -59,9 +59,9 @@ class PatternSet(dict):
 
         f = Spec.spec.clkMhz
         trwInterleaved = self.tw + self.tr + self.twtr + self.trtw
-        return e_ref * float(self.AG) * min(1.0/self.tw,
-                                            1.0/self.tr,
-                                            2.0/trwInterleaved) * f
+        return e_ref * float(self.AG) * min(1.0 / self.tw,
+                                            1.0 / self.tr,
+                                            2.0 / trwInterleaved) * f
 
     def __setitem__(self, key, value):
         """Act like a dict for keys that are pattern types (PatternTp)."""

@@ -39,7 +39,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  Authors: Sven Goossens
 """
 
-__all__ = ['patternGenBGI', 'refPattern', 'rtwPattern', 'wtrPattern']
+__all__ = ['patternGenBGI', 'refPattern', 'rtwPattern', 'wtrPattern', 'rtwPatternCop', 'wtrPatternCop']
 
 from collections import namedtuple
 
@@ -253,3 +253,29 @@ def annotateAutoPre(P):
     for key, cmd in lastRW.items():
         cmd.autoPrechargeFlag = True
     return P
+
+
+def rtwPatternCop(from_ps, to_ps0, to_ps1):
+    """
+    Conservative open-page rtw pattern
+    """
+    length0 = _rtwPattern(from_ps[PatternTp.RD].commandsPre,
+                          to_ps0[PatternTp.WR].commandsPre,
+                          len(from_ps[PatternTp.RD]))
+    length1 = _rtwPattern(from_ps[PatternTp.RD].commandsPre,
+                          to_ps1[PatternTp.WR].commandsPre,
+                          len(from_ps[PatternTp.RD]))
+    return RawPattern(max(length0, length1), [], [])
+
+
+def wtrPatternCop(from_ps, to_ps0, to_ps1):
+    """
+    Conservative open-page wtr pattern
+    """
+    length0 = _wtrPattern(to_ps0[PatternTp.RD].commandsPre,
+                          from_ps[PatternTp.WR].commandsPre,
+                          len(from_ps[PatternTp.WR]))
+    length1 = _wtrPattern(to_ps1[PatternTp.RD].commandsPre,
+                          from_ps[PatternTp.WR].commandsPre,
+                          len(from_ps[PatternTp.WR]))
+    return RawPattern(max(length0, length1), [], [])

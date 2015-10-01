@@ -26,33 +26,28 @@ The script generates memory patterns for DDR2/3/4 and LPDDR1/2/3 memories, and i
  * `--memspec`: An xml file that contains a specification of the memory timings. We have provided 12 samples we often use. Running:
 
 ```bash
-./make_patterns.py --BI 2 --BC 4 --memspec memspecs/DDR4/MICRON_512MB_DDR4-1866_8bit_A.xml 
+./make_patterns.py --BI 2 --BC 4 --memspec memspecs/DDR4/MICRON_512MB_DDR4-1866_8bit_A.xml
 ```
 
 should yield:
 
 ```
 Generating patterns for a MICRON_512MB_DDR4-1866_8bit_A memory using BI 2, BC 4
-PatternTp.WR (AP) length: 69
+Worst-case bandwidth: 834.260 MB/s
+PatternTp.WR (AP): length: 69
 Commands: A0-N0-N0-N0-N0-N0-N0-N0-N0-N0-N0-N0-N0-W0-N0-N0-N0-N0-W0-A1-N0-N0-N0-W0-N0-N0-N0-N0-W0-N0-N0-N0-W1-N0-N0-N0-N0-W1-N0-N0-N0-N0-W1-N0-N0-N0-N0-W1-N0-N0-N0-N0-N0-N0-N0-N0-N0-N0-N0-N0-N0-N0-N0-N0-N0-N0-N0-N0-N0
 
-PatternTp.RD (AP) length: 48
+PatternTp.RD (AP): length: 48
 Commands: A0-N0-N0-N0-N0-N0-N0-N0-N0-N0-N0-N0-N0-R0-N0-N0-N0-N0-R0-A1-N0-N0-N0-R0-N0-N0-N0-N0-R0-N0-N0-N0-R1-N0-N0-N0-N0-R1-N0-N0-N0-N0-R1-N0-N0-N0-N0-R1
 
-PatternTp.RD (ANP) length: 51
-Commands: A0-N0-N0-N0-N0-N0-N0-N0-N0-N0-N0-N0-N0-R0-N0-N0-N0-N0-R0-A1-N0-N0-N0-R0-N0-N0-N0-N0-R0-N0-N0-N0-R1-N0-N0-N0-N0-R1-N0-N0-N0-N0-R1-N0-N0-N0-N0-R1-N0-N0-N0
+PatternTp.RTW (AP): length: 0
+Commands: 
 
-PatternTp.RD (NAP) length: 35
-Commands: R0-N0-N0-N0-N0-R0-N0-N0-N0-N0-R0-N0-N0-N0-N0-R0-N0-N0-N0-R1-N0-N0-N0-N0-R1-N0-N0-N0-N0-R1-N0-N0-N0-N0-R1
-
-PatternTp.WR (ANP) length: 51
-Commands: A0-N0-N0-N0-N0-N0-N0-N0-N0-N0-N0-N0-N0-W0-N0-N0-N0-N0-W0-A1-N0-N0-N0-W0-N0-N0-N0-N0-W0-N0-N0-N0-W1-N0-N0-N0-N0-W1-N0-N0-N0-N0-W1-N0-N0-N0-N0-W1-N0-N0-N0
-
-PatternTp.WR (NAP) length: 56
-Commands: W0-N0-N0-N0-N0-W0-N0-N0-N0-N0-W0-N0-N0-N0-N0-W0-N0-N0-N0-W1-N0-N0-N0-N0-W1-N0-N0-N0-N0-W1-N0-N0-N0-N0-W1-N0-N0-N0-N0-N0-N0-N0-N0-N0-N0-N0-N0-N0-N0-N0-N0-N0-N0-N0-N0-N0
+PatternTp.WTR (AP): length: 0
+Commands: 
 ```
 
-The *AP* patterns contain activate and precharge commands, and are implement a close-page policy. The remaining patterns are related to the conservative open-page policy.
+The *AP* patterns contain activate and precharge commands, and are implement a close-page policy. Worst-case bandwidth is calculated based on this publication: [ieeexplore](http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=5591843), under the assumption that the data efficiency is 1, i.e. the request size is equal to the atom size (BI * BC * BL * memory_width).
 
 The optional argument:
  * `--BGI`: Use bank-group interleaving (DDR4 only)

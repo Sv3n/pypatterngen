@@ -88,7 +88,7 @@ class Pattern(object):
             if cmd.cycle == key:
                 return cmd
         else:
-            return Cmd(CmdTp.NOP, 0, 0)
+            return Cmd(CmdTp.NOP, 0, key)
 
 
 if __name__ == '__main__':

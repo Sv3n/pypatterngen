@@ -57,6 +57,18 @@ def getFirstPre(P):
     return idex
 
 
+def removePrecharges(P):
+    P = [cmd for cmd in P if cmd.cmdType != CmdTp.PRE]
+    for cmd in P:
+        cmd.autoPrechargeFlag = False
+
+
+def findFirstRdWr(P):
+    smallestCc = min([cmd.cycle for cmd in P if cmd.cmdType in [CmdTp.WR, CmdTp.RD]])
+    for cmd in P:
+        if cmd.cycle == smallestCc:
+            smallestRdWrCmd = cmd
+    return smallestRdWrCmd
 def toAnp(P):
     """
     Convert an AP pattern to an ANP pattern
@@ -67,18 +79,13 @@ def toAnp(P):
     """
     P = copy.deepcopy(P)
     # Remove all precharges:
-    P = [cmd for cmd in P if cmd.cmdType != CmdTp.PRE]
-    for cmd in P:
-        cmd.autoPrechargeFlag = False
+    removePrecharges(P)
 
-    # Chop trailing NOPs
+    """Chop trailing NOPs"""
 
     # Find the first rd/wr in the NA* schedule
     # This ensures we compare with the right bank when executing earliest()
-    smallestCc = min([cmd.cycle for cmd in P if cmd.cmdType in [CmdTp.WR, CmdTp.RD]])
-    for cmd in P:
-        if cmd.cycle == smallestCc:
-            smallestRdWrCmd = cmd
+    smallestRdWrCmd = findFirstRdWr(P)
 
     # Find the earliest possible location of a next RD/WR after this pattern.
     newLen = earliest(smallestRdWrCmd, P)
@@ -127,6 +134,22 @@ def patternGenNap(BI, BC, rdOrWr, useBsPbgi, ANP, ANPLength):
     PWPre = sorted(PWPre, key=lambda c: c.cycle)
 
     return RawPattern(pattLen, PWPre, P)
+
+
+def patternGenNanp(BI, BC, rdOrWr, useBsPbgi, NAP):
+    """
+    Create NANP pattern based on NAP pattern, by chopping off the P-part.
+    """
+    P = copy.deepcopy(NAP)  # The NAP pattern is the base of this pattern
+    # Remove all precharges:
+    removePrecharges(P)
+    # Find the first rd/wr in the NA* schedule
+    # This ensures we compare with the right bank when executing earliest()
+    smallestRdWrCmd = findFirstRdWr(P)
+
+    # Find the earliest possible location of a next RD/WR after this pattern.
+    newLen = earliest(smallestRdWrCmd, P)
+    return RawPattern(newLen, P, P)
 
 
 def stretchPrecharge(pattLen, P, nextPattern):
