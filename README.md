@@ -1,4 +1,5 @@
 # pypatterngen - The python-based SDRAM patterns generator
+[![build status](https://git.ics.ele.tue.nl/ci/projects/6/status.png?ref=master)](https://git.ics.ele.tue.nl/ci/projects/6?ref=master)
 
 Memory patterns are sequences of SDRAM commands that are statically computed at design time and dynamically scheduled at run time. A description of how such patterns are used is found in the article: *Power/Performance Trade-offs in Real-Time SDRAM Command Scheduling in IEEE Transactions on Computers* ([ieeexplore](http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=7169527)). The SDRAM controller in the [CompSOC](http://www.compsoc.eu) platform executes these memory patterns, enabling us to give (real-time) guarantees on worst-case bandwidth and worst-case response time.
 
@@ -87,7 +88,3 @@ doi: 10.1109/CODES-ISSS.2013.6658989* ([ieeexplore](http://ieeexplore.ieee.org/x
  * **On the real-time analysis of memory patterns**: *Akesson, B.; Hayes, W.; Goossens, K., "Classification and Analysis of Predictable Memory Patterns," in Embedded and Real-Time Computing Systems and Applications (RTCSA), 2010 IEEE 16th International Conference on , pp.367-376 doi: 10.1109/RTCSA.2010.35* ([ieeexplore](http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=5591843))
  * **A high-level overview of the memory controller including front-end**: *Akesson, B.; Goossens, K., "Architectures and modeling of predictable memory controllers for improved system integration," in Design, Automation & Test in Europe Conference & Exhibition (DATE), 2011 , pp.1-6, doi: 10.1109/DATE.2011.5763145* ([ieeexplore](http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=5763145))
  * **CompSOC platform overview**: *Kees Goossens, Arnaldo Azevedo, Karthik Chandrasekar, Manil Dev Gomony, Sven Goossens, Martijn Koedam, Yonghui Li, Davit Mirzoyan, Anca Molnos, Ashkan Beyranvand Nejad, Andrew Nelson, and Shubhendu Sinha, "Virtual Execution Platforms for Mixed-Time-Criticality Systems: The CompSOC Architecture and Design Flow", ACM SIGBED Volume 10(3), Oct 2013.* ([pdf](http://www.es.ele.tue.nl/~kgoossens/2013-sigbed.pdf), [mirror](http://sigbed.seas.upenn.edu/archives/2013-10/crts2012_submission_5.pdf))
-
- 
-
-
