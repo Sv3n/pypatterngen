@@ -1,0 +1,6 @@
+before_script:
+  - sudo apt-get install -y python
+
+default_test:
+ script:
+ - python make_patterns.py
