@@ -3,4 +3,4 @@ before_script:
 
 default_test:
  script:
- - python3.4 make_patterns.py
+ - python3.4 make_patterns.py --BI 2 --BC 2 --memspec memspecs/DDR3/MICRON_128MB_DDR3-1066_16bit_G.xml
